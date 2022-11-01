@@ -10,7 +10,9 @@ app.use(bodyParser.json())
 
 
 const userRoutes =require("./api/user/user.routes");
+const menuRoutes = require("./api/menu/menu.routes")
 app.use('/api/user',userRoutes);
+app.use('/api/menu',menuRoutes);
 
 
 
