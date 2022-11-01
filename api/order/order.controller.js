@@ -16,9 +16,10 @@ module.exports ={
                         message: "Database connection error"
                     });
                 }
+                body['orderId']= results.insertId
                 return res.status(201).json({
                     success:1,
-                    data: results,
+                    data: body,
                 });
         });
     },

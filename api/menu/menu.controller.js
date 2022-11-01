@@ -15,10 +15,10 @@ module.exports ={
                         success:0,
                         message: "Database connection error"
                     });
-                }
+                } body['menuId']=results.insertId
                 return res.status(201).json({
                     success:1,
-                    data: results,
+                    data: body,
                 });
         });
     },

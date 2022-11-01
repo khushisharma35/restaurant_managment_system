@@ -5,28 +5,6 @@ module.exports = {
     create: (data,callback) => {
         console.log(data);
         data.userPassword=hashSync(data.userPassword,10)
-        pool.query(
-            "insert into user(userName,userEmail,userNumber,userPassword,bankDetailId) values(?,?,?,?,?)",
-            [
-                data.userName,
-                data.userEmail,
-                data.userNumber,
-                data.userPassword,
-                data.userRole,
-                data.bankDetailId
-            
-                // data.bankDetailId
-            
-            ],
-            (error,results,fields) =>{
-                if(error){
-                    console.log(error);
-
-                }
-                
-            }
-           
-        );
         if(data.userRole==="staff"){
             pool.query(
            "insert into staffDocument(document,staffId) values(?,?)",
@@ -37,16 +15,39 @@ module.exports = {
            ],
            (error,results,fields) =>{
             if(error){
-                console.log(error);
+                // console.log(error);
                 return callback(error,null);
             }
             return callback(null,results);
         }
             );
         }
-       
-       
-       
+        else{ pool.query(
+            "insert into user(userName,userEmail,userNumber,userPassword,bankDetailId,userRole) values(?,?,?,?,?,?)",
+            [
+                data.userName,
+                data.userEmail,
+                data.userNumber,
+                data.userPassword,
+                data.bankDetailId,
+                data.userRole
+            
+                // data.bankDetailId
+            
+            ],
+            (error,results,fields) =>{
+                
+                if(error){
+                    console.log(error);
+                    return callback(error,null);
+
+                }
+                return callback(null,results);
+                
+            }
+           
+        );}
+         
             
     },
     GetUser: (callback) =>{

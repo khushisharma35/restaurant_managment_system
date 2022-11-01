@@ -22,3 +22,5 @@ app.use('/api/order',orderRoutes);
 app.listen(process.env.APP_PORT ,() => {
     console.log(`app is running :`,process.env.APP_PORT);
 })
+
+module.exports =app;

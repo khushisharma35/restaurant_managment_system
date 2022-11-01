@@ -1,13 +1,19 @@
 const {create,GetUser,GetUserByEmail,deleteUser,UpdateUser}=require("./user.service");
 // const {genSaltSync,hashSync,compareSync} = require("bcrypt");
 const { hashSync, compareSync}=require('bcrypt');
-const {sign} =require('jsonwebtoken')
+const {sign} =require('jsonwebtoken');
+const { request } = require("../../server");
 
 
 module.exports ={
     CreateUser: (req,res) =>{
         const body =req.body;
-
+        //  console.log(req.body);
+        if(typeof body.userRole != 'string')
+        return res.status(400).json({
+            success: 0,
+            message :"userRole must be string"
+        });
         create(body
             ,(err, results) => {
                 if(err){
@@ -18,9 +24,11 @@ module.exports ={
                         message: "Database connection error"
                     });
                 }
+                // console.log(body);
+                body['userId']=results.insertId
                 return res.status(201).json({
                     success:1,
-                    data: results,
+                    data: body
                 });
         });
     },
