@@ -8,7 +8,7 @@ const userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXN1bHQiOnsidXNlcklk
 describe("create order",()=>{
     it("it should return status code 201 with signup successfully",async ()=>{
         const response= await request(app)
-        .post("/api/user")
+        .post("/api/order")
        .send({
         quantity : "15",
         userId : 12,
@@ -24,56 +24,33 @@ describe("create order",()=>{
   })
   it("return status code 400 when bad request", async () => {
     const response = await request(app)
-    .post("/api/user")
+    .post("/api/order")
     .send({
-        userName :"",
-        userEmail :"tina@gmail.com",
-        userNumber : "79895597856",
-        userPassword : "1234",
-        bankDetailId :1,
-        userRole : 12
+        quantity : "15",
+        userId : 12,
+        menuId : 2,
+       orderStatus :"11"
     })
     
     expect(response.statusCode).toBe(400)
 });
-describe("user login",()=> {
-    it('it must return status 200 when login successfully',async()=>{
-        const response =await request(app)
-        .post("/api/user/login")
-        .send({
-            userEmail :"tina@gmail.com",
-            userPassword : "1234"
-        })
-        expect(response.statusCode).toBe(200)
-    });
-    it('it must return status 401 when login unsuccessfully',async()=>{
-        const response =await request(app)
-        .post("/api/user/login")
-        .send({
-            userEmail :"tina@gmail.com",
-            userPassword : "00"
-        })
-        expect(response.statusCode).toBe(401)
-    });
-});
-});
-describe("user update",()=>{
+
+describe("order update",()=>{
     it('it must return statuscode 200 when update is done',async()=>{
         const response = await request(app)
-        .patch("/api/user/8")
+        .patch("/api/user/1")
         .auth(userToken, {type: 'bearer'})
         .send({
-            userName :"prachi",
-            userEmail :"prachi@gmail.com",
-            userNumber : "796559234786",
-            userPassword : "333",
-             bankDetailId :1,
-            userRole : "customer"
+        quantity: "8",
+         userId : 12,
+         menuId : 2,
+       orderStatus :"cancel"
+
         })
         expect(response.statusCode).toBe(200)
     });
 });
-describe("user delete",()=>{
+describe("order delete",()=>{
     it('it must return status code 200when user is deleted',async()=>{
         const response = await request(app)
         .delete("/api/user/7")
@@ -83,4 +60,4 @@ describe("user delete",()=>{
     });
 })
 
-    
+})   
